@@ -1,7 +1,8 @@
 '''
 Euler Problem 17
 
-Figure out how to convert a number into it's equivalent word and then count the characters in there while ignoring spaces
+Figure out how to convert a number into it's equivalent word and then count 
+the number of letters used in the word while ignoring spaces
 
 '''
 
@@ -38,58 +39,49 @@ def char_count_of_number_in_words(number):
 
     units_digit = number
 
-    #print(f"Thousands: {thousands_digit}, Hundreds: {hundreds_digit}, Tens: {tens_digit}, Units: {units_digit}")
-
     # Converting digits into words
 
     # If Single Digit
     if (original_number < 10):
         number_in_words = unit_words[units_digit]
-        character_count += len(number_in_words)
 
     # If 10, 11 .. 19
     elif (original_number >= 10) and (original_number <=19):
-        number_in_words += teen_words[units_digit]
-        character_count += len(number_in_words)
+        number_in_words = teen_words[units_digit]
 
     # If between 20 and 99
     elif (original_number >= 20) and (original_number < 100):
-        number_in_words += ten_words[tens_digit]
-        character_count += len(number_in_words)
+        number_in_words = ten_words[tens_digit]
 
         if(units_digit > 0):
             number_in_words += " " + unit_words[units_digit]
-            character_count += len(unit_words[units_digit])
 
     # If between 100 and 999
     elif (original_number >= 100) and (original_number < 1000):
-        number_in_words += unit_words[hundreds_digit] + " hundred"
-        character_count += len(unit_words[hundreds_digit]) + len("hundred")
-
+        
+        number_in_words = unit_words[hundreds_digit] + " hundred"
+        
         # Only proceed if the number is not an x00 (100, 200 etc)
 
         if(tens_digit == 0) and (units_digit > 0):
             number_in_words += " and " + unit_words[units_digit]
-            character_count += len(unit_words[units_digit]) + 3
+            
 
         elif(tens_digit == 1) and (units_digit > 0):
             number_in_words += " and " + teen_words[units_digit]
-            character_count += len(teen_words[units_digit]) + 3
 
         elif(tens_digit > 1):
             number_in_words += " and " + ten_words[tens_digit]
-            character_count += len(ten_words[tens_digit]) + 3
 
             if(units_digit > 0):
                 number_in_words += " " + unit_words[units_digit]
-                character_count += len(unit_words[units_digit])
 
     # If between 1000 and 9999
     elif (original_number >= 1000) and (original_number < 10000):
-        number_in_words += unit_words[thousands_digit] + " thousand"
-        character_count += len(unit_words[thousands_digit]) + len("thousand")
+        number_in_words = unit_words[thousands_digit] + " thousand"
+        
 
-        # Only proceed if the number is not an x000 (100, 200 etc)
+        # If number is X0XX
 
         if(hundreds_digit == 0) and (tens_digit == 0) and (units_digit > 0):
             number_in_words += " and " + unit_words[units_digit]
@@ -97,45 +89,42 @@ def char_count_of_number_in_words(number):
 
         elif(hundreds_digit == 0) and (tens_digit == 1) and (units_digit > 0):
             number_in_words += " and " + teen_words[units_digit]
-            character_count += len(teen_words[units_digit]) + 3
+            
 
         elif(hundreds_digit == 0) and (tens_digit > 1) and (units_digit >= 0):
             number_in_words += " and " + ten_words[tens_digit]
-            character_count += len(ten_words[tens_digit]) + 3
+            
             if(units_digit > 0):
                     number_in_words += " " + unit_words[units_digit]
-                    character_count += len(unit_words[units_digit])
-
+                    
+        # If number is XXXX
         elif(hundreds_digit > 0):
             number_in_words += " " + unit_words[hundreds_digit] + " hundred"
-            character_count += len(unit_words[hundreds_digit]) + len("hundred")
+            
 
             if(tens_digit == 0) and (units_digit > 0):
                     number_in_words += " and " + unit_words[units_digit]
-                    character_count += len(unit_words[units_digit]) + 3
+                    
 
             elif(tens_digit == 1) and (units_digit > 0):
                 number_in_words += " and " + teen_words[units_digit]
-                character_count += len(teen_words[units_digit]) + 3
+                
 
             elif(tens_digit > 1):
                 number_in_words += " and " + ten_words[tens_digit]
-                character_count += len(ten_words[tens_digit]) + 3
+                
 
                 if(units_digit > 0):
                     number_in_words += " " + unit_words[units_digit]
-                    character_count += len(unit_words[units_digit])
 
-    # print(f"{original_number} : {number_in_words} / {character_count} chars")
-    count = 0
+
+    # Find the number of characters in the word minus spaces
     for character in number_in_words:
         if character != " ":
-            count += 1
+            character_count += 1
 
-    # print(f"{original_number} : {number_in_words} / {character_count} chars vs {count")
-    if count != character_count:
-        print(f"error: {original_number} : {number_in_words} / {character_count} chars vs {count}")
-
+    print(f"{original_number}, {number_in_words}, {character_count}")
+    
     return character_count
 
 
