@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 
-int word_length_of_number(int actual_number) {
+int letter_length_of_number(int actual_number) {
 
     int number = actual_number;
     
@@ -58,10 +58,10 @@ int word_length_of_number(int actual_number) {
         if(tens == 0 && units == 0) {
             // strcat(number_in_words, "");
             
-        } else if (tens == 0) && (units > 0) {
+        } else if (tens == 0 && units > 0) {
                 strcat(number_in_words, "and");
                 strcat(number_in_words, units_words[units]);
-        } else if(tens == 1) && (units > 0) {
+        } else if(tens == 1 && units > 0) {
             strcat(number_in_words, "and");
             strcat(number_in_words, teens_words[units]);
         } else {
@@ -77,7 +77,7 @@ int word_length_of_number(int actual_number) {
     else if (actual_number == 1000) {
         strcat(number_in_words, thousands_words[1]);
     }
-    printf("%s\n", number_in_words);
+    // printf("%s\n", number_in_words);
     return strlen(number_in_words);
 }
 
@@ -92,7 +92,7 @@ int main(int argc, char const *argv[]) {
 
     int sum = 0;
     for (int i = 1; i <= upto; i++) {
-        sum += word_length_of_number(i);
+        sum += letter_length_of_number(i);
     }
     printf("%d\n", sum);
     return 0;
