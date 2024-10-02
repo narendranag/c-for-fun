@@ -3,44 +3,31 @@
 #include <stdlib.h>
 
 
-int main(int argc, char **argv) {
-    if (argc < 2) {
-        printf("Usage: %s <number>\n", argv[0]);
-        return 1;
-    }
+int word_length_of_number(int actual_number) {
+
+    int number = actual_number;
     
-    char *number = argv[1];
     char number_in_words[100] = "";
-    int actual_number, units, tens, hundreds, thousands = 0;
+    int units, tens, hundreds, thousands = 0;
 
-
-    int number_length = strlen(number);
-    actual_number = atoi(number);
-
-    printf("Number: %d\n", actual_number);
-
-    if(actual_number >= 1000) {
-        printf("Number is too large\n");
-        return 1;
+    // Get the digits of the number
+    if(number > 99) {
+        hundreds = number / 100;
+        number = number % 100;
     }
-
-    printf("Number length: %d\n", number_length);
-
-    printf("-------------------\n");
-
-    if (number_length >= 1) units = number[number_length - 1] - '0';
-    if (number_length >= 2) tens = number[number_length - 2] - '0';
-    if (number_length >= 3) hundreds = number[number_length - 3] - '0';
-    if (number_length >= 4) thousands = number[number_length - 4] - '0';
-
+    if(number > 9) {
+        tens = number / 10;
+        number = number % 10;
+    }
+    units = number;
 
     // Construct the number in words
 
     char *units_words[] = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
     char *tens_words[] = {"", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
-    char *teens_words[] = {"", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
-    char *hundreds_words[] = {"", "one hundred", "two hundred", "three hundred", "four hundred", "five hundred", "six hundred", "seven hundred", "eight hundred", "nine hundred"};
-    char *thousands_words[] = {"", "one thousand", "two thousand", "three thousand", "four thousand", "five thousand", "six thousand", "seven thousand", "eight thousand", "nine thousand"};
+    char *teens_words[] = {"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
+    char *hundreds_words[] = {"", "onehundred", "twohundred", "threehundred", "fourhundred", "fivehundred", "sixhundred", "sevenhundred", "eighthundred", "ninehundred"};
+    char *thousands_words[] = {"", "onethousand", "two thousand", "three thousand", "four thousand", "five thousand", "six thousand", "seven thousand", "eight thousand", "nine thousand"};
 
     // if it is a single digit number
     if (actual_number < 10) {
@@ -56,35 +43,57 @@ int main(int argc, char **argv) {
     else if (actual_number >= 20 && actual_number <= 99) {
         strcat(number_in_words, tens_words[tens]);
         if (units > 0) {
-            strcat(number_in_words, " ");
+            // strcat(number_in_words, " ");
             strcat(number_in_words, units_words[units]);
         }
     }
 
     // Now for a three digit number between 100 and 999
-    else if (actual_number >= 100 && actual_number < 1000) {
+    else if (actual_number >= 100 && actual_number <= 999) {
 
         strcat(number_in_words, hundreds_words[hundreds]);
 
-        if (tens == 0) {
-            if (units > 0) {
-                strcat(number_in_words, " and ");
+        // Check if is 200 / 300 / 400 etc
+
+        if(tens == 0 && units == 0) {
+            // strcat(number_in_words, "");
+            
+        } else if (tens == 0) && (units > 0) {
+                strcat(number_in_words, "and");
                 strcat(number_in_words, units_words[units]);
-            }
-        } else if (tens == 1) {
-            strcat(number_in_words, " and ");
+        } else if(tens == 1) && (units > 0) {
+            strcat(number_in_words, "and");
             strcat(number_in_words, teens_words[units]);
         } else {
-            strcat(number_in_words, " and ");
+            strcat(number_in_words, "and");
             strcat(number_in_words, tens_words[tens]);
             if (units > 0) {
-                strcat(number_in_words, " ");
+                // strcat(number_in_words, "");
                 strcat(number_in_words, units_words[units]);
             }
 
         }
     }
+    else if (actual_number == 1000) {
+        strcat(number_in_words, thousands_words[1]);
+    }
+    printf("%s\n", number_in_words);
+    return strlen(number_in_words);
+}
 
-    printf("Number in words: %s\n", number_in_words);
+int main(int argc, char const *argv[]) {
+
+    if (argc != 2) {
+        printf("Usage: %s <number>\n", argv[0]);
+        return 1;
+    }
+
+    int upto = atoi(argv[1]);
+
+    int sum = 0;
+    for (int i = 1; i <= upto; i++) {
+        sum += word_length_of_number(i);
+    }
+    printf("%d\n", sum);
     return 0;
 }
