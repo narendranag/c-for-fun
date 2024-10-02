@@ -1,3 +1,10 @@
+'''
+Euler Problem 17
+
+Figure out how to convert a number into it's equivalent word and then count the characters in there while ignoring spaces
+
+'''
+
 def char_count_of_number_in_words(number):
 
     # All our variables
@@ -80,7 +87,7 @@ def char_count_of_number_in_words(number):
     # If between 1000 and 9999
     elif (original_number >= 1000) and (original_number < 10000):
         number_in_words += unit_words[thousands_digit] + " thousand"
-        character_count += len(unit_words[hundreds_digit]) + len("thousand")
+        character_count += len(unit_words[thousands_digit]) + len("thousand")
 
         # Only proceed if the number is not an x000 (100, 200 etc)
 
@@ -120,6 +127,14 @@ def char_count_of_number_in_words(number):
                     character_count += len(unit_words[units_digit])
 
     # print(f"{original_number} : {number_in_words} / {character_count} chars")
+    count = 0
+    for character in number_in_words:
+        if character != " ":
+            count += 1
+
+    # print(f"{original_number} : {number_in_words} / {character_count} chars vs {count")
+    if count != character_count:
+        print(f"error: {original_number} : {number_in_words} / {character_count} chars vs {count}")
 
     return character_count
 
