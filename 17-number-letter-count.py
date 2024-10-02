@@ -67,7 +67,7 @@ def char_count_of_number_in_words(number):
             number_in_words += " and " + unit_words[units_digit]
             
 
-        elif(tens_digit == 1) and (units_digit > 0):
+        elif(tens_digit == 1):
             number_in_words += " and " + teen_words[units_digit]
 
         elif(tens_digit > 1):
@@ -124,7 +124,7 @@ def char_count_of_number_in_words(number):
             character_count += 1
 
     print(f"{original_number}, {number_in_words}, {character_count}")
-    
+
     return character_count
 
 
