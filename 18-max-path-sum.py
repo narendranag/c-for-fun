@@ -1,6 +1,7 @@
 
 # Problem: Maximum path sum I
-# By starting at the top of the triangle below and moving to adjacent numbers on the row below,
+# By starting at the top of the triangle below and moving
+# to adjacent numbers on the row below,
 # the maximum total from top to bottom is 23.
 # 3
 # 7 4
@@ -25,16 +26,20 @@
 # 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
 
 # Solution:
-# The key to this problem is to start from the bottom of the triangle and work our way up.
-# We will start from the second last row and add the maximum of the two adjacent numbers to the current number.
+# The key to this problem is to start from the bottom of the triangle
+# and work our way up.
+# We will start from the second last row and add the maximum of the
+# two adjacent numbers to the current number.
 # We will continue this process until we reach the top of the triangle.
 # The maximum sum will be the number at the top of the triangle.
+
 
 def max_path_sum(triangle):
     for i in range(len(triangle) - 2, -1, -1):
         for j in range(len(triangle[i])):
             triangle[i][j] += max(triangle[i + 1][j], triangle[i + 1][j + 1])
     return triangle[0][0]
+
 
 triangle = [
     [75],
@@ -53,4 +58,6 @@ triangle = [
     [63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
     [4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]
 ]
+
+
 print(max_path_sum(triangle))
